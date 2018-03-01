@@ -134,6 +134,7 @@ class ContactForm extends React.Component {
         <Name name="name" type="text" placeholder="Full Name" value={this.state.name} onChange={this.handleInputChange} required/>
         <Email name="email" type="email" placeholder="Email" value={this.state.email} onChange={this.handleInputChange} required/>
         <Message name="message" type="text" placeholder="Message" value={this.state.message} onChange={this.handleInputChange} required/>
+        <div data-netlify-recaptcha></div>
         <Submit name="submit" type="submit" value="Send" />
 
       </Form>
