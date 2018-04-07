@@ -5,6 +5,7 @@
   "repository": "https://github.com/ryanwiemer/gatsby-starter-gcn",
   "author": "Ryan Wiemer <ryan@ryanwiemer.com>",
   "dependencies": {
+    "@onextech/react-semantic-booster": "^0.6.36",
     "chalk": "^2.3.1",
     "contentful-import": "^6.2.2",
     "dotenv": "^5.0.1",
@@ -24,6 +25,7 @@
     "path": "^0.12.7",
     "promise-polyfill": "^7.1.0",
     "react-helmet": "^5.2.0",
+    "semantic-ui-react": "^0.78.3",
     "styled-components": "^3.1.6",
     "whatwg-fetch": "^2.0.3"
   },
@@ -32,15 +34,22 @@
   ],
   "license": "MIT",
   "main": "n/a",
+  "devDependencies": {
+    "babel-loader": "7.1.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "prettier": "^1.11.0",
+    "semantic-ui": "^2.3.0"
+  },
   "scripts": {
+    "build-theme": "cd semantic && gulp build-css && gulp build-assets",
     "build": "gatsby build",
-    "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"src/**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "setup": "node ./bin/setup.js",
     "dev": "gatsby develop"
-  },
-  "devDependencies": {
-    "prettier": "^1.11.0"
   }
 }

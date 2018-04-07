@@ -19,7 +19,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         result.data.allContentfulPost.edges.map(({ node }) => {
         createPage({
           path: `posts/${node.slug}/`,
-          component: path.resolve(`./src/templates/post.js`),
+          component: path.resolve(`./src/components/templates/Post.js`),
           context: {
             slug: node.slug,
           },
@@ -45,7 +45,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
         result.data.allContentfulPage.edges.map(({ node }) => {
         createPage({
           path: `${node.slug}/`,
-          component: path.resolve(`./src/templates/page.js`),
+          component: path.resolve(`./src/components/templates/Page.js`),
           context: {
             slug: node.slug,
           },

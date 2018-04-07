@@ -1,127 +1,132 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Link from 'gatsby-link'
-import Img from 'gatsby-image'
-import Helmet from 'react-helmet'
-import styled from 'styled-components'
-import config from '../utils/siteConfig'
+import React from 'react';
+import Link from 'gatsby-link';
+import Img from 'gatsby-image';
+import styled from 'styled-components';
+import { Header, Container, Button, Divider, Card } from 'semantic-ui-react';
+import { Block, Grid } from '@onextech/react-semantic-booster';
+import config from '../utils/siteConfig';
 
-const Index = ({data}) =>  {
 
-  const Wrapper = styled.section`
-    padding: 2em 1.5em;
-    margin: 0 auto;
-    max-width: ${props => props.theme.sizes.maxWidth};
+const Wrapper = styled.div`
+  flex: 1;
+  height: 100%;
+`;
+
+const SectionHeader = styled(Header)`
+  &.ui.header {
+    font-size: 1.6em;
+  }
+`;
+
+const SectionLead = styled.p`
+  font-size: 1.25em;
+`;
+
+const Title = styled(Header)`
+    &.ui.header {
+      font-size: 2.6em;
+      margin-bottom: 0.1em;
+      margin-top: .25em;
+    }
   `;
 
-  const Header = styled.div`
-    h1 {
-      font-size: 1.5em;
-      text-transform: capitalize;
-      font-weight: 600;
-      text-align: center;
-      margin: 2rem 0 4rem;
-      line-height: 1.25;
-    }
-    span {
-      margin: 0 0 0 .25em;
-    }
-    a {
-      transition: all .2s;
-      color: ${props => props.theme.colors.base};
-      &:hover {
-        color: ${props => props.theme.colors.highlight};
+const Subtitle = styled.p`
+    font-size: 1.26em;
+    opacity: .46;
+  `;
+
+const ButtonLink = styled(Button)`
+    &.ui.button {
+      padding: 0;
+      a {
+        padding: 0.5em 1.2em;
       }
     }
   `;
 
-  const Title = styled.h2`
-    font-size: 3em;
-    font-weight: 600;
-    text-align: center;
-    margin: 0 0 1em 0;
-  `;
+const PaddedLink = styled(Link)`
+  display: block;
+  color: inherit;
+  margin-bottom: 3px;
+  &:hover {
+    color: inherit;
+  }
+`;
 
-  const List = styled.ul`
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
-    margin: 0 auto;
-    &:after {
-      content: "";
-      @media screen and (min-width: ${props => props.theme.responsive.small}) {
-        flex: 0 0 49%;
-      }
-      @media screen and (min-width: ${props => props.theme.responsive.medium}) {
-        flex: 0 0 32%;
-      }
-    }
-  `;
+const HeroContainer = styled.div`
+  margin-bottom: 2em;
+`;
 
-  const Card = styled.li`
-    border: 1px solid ${props => props.theme.colors.secondary};
-    border-radius: 2px;
-    margin: 0 0 1em 0;
+const CaptionTitle = styled(Header)`
+  letter-spacing: 1px;
+`;
+
+const PostLink = styled(Link)`
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  flex: 0 1 100%;
+  text-decoration: none;
+
+  div {
+    flex-grow: 1;
     width: 100%;
-    @media screen and (min-width: ${props => props.theme.responsive.small}) {
-      flex: 0 0 49%;
-    }
-    @media screen and (min-width: ${props => props.theme.responsive.medium}) {
-      flex: 0 0 32%;
-    }
-  `;
-
-  const PostLink = styled(Link)`
-    display: flex;
-    flex-flow: column;
     height: 100%;
-    flex: 0 1 100%;
-    color: ${props => props.theme.colors.base};
-    text-decoration: none;
+  }
+`;
 
-    div {
-      flex-grow: 1;
-      width: 100%;
-      height: 100%;
-    }
-
-    h3 {
-      font-weight: 600;
-      text-transform: capitalize;
-      text-align: center;
-      margin: 1em 0;
-    }
-  `;
-
+const Index = ({ data }) => {
   const posts = data.allContentfulPost.edges;
 
   return (
-    <div>
+    <Wrapper>
+      <Block textAlign="center" attached>
+        <Container text>
+          <HeroContainer>
+            <CaptionTitle sub as="h1">{config.siteTitle}</CaptionTitle>
+            <Title as="h2">{config.siteIntro}</Title>
+            <Subtitle>{config.siteDescription}</Subtitle>
+          </HeroContainer>
+        </Container>
+      </Block>
 
-      <Wrapper>
+      {posts && (
+        <Block attached secondary>
+          <Grid container stackable attached>
+            <Grid.Row columns="equal">
+              {posts.map(({ node: post }) => (
+                <Grid.Column key={post.id}>
+                  <Link to={`/posts/${post.slug}/`}>
+                    <Card fluid>
+                      <Img sizes={post.heroImage.sizes} style={{ maxHeight: 200 }} />
+                      <Card.Content>
+                        <Card.Header>
+                          {post.title}
+                        </Card.Header>
+                      </Card.Content>
+                    </Card>
+                  </Link>
+                </Grid.Column>
+              ))}
+            </Grid.Row>
+          </Grid>
+        </Block>
+      )}
 
-        <Header>
-          <h1>A blog made with <a href="https://www.gatsbyjs.org/" target="_blank">Gatsby</a>, <a href="https://www.contentful.com/" target="_blank">Contentful</a> and <a href="https://www.netlify.com/" target="_blank">Netlify</a> <span>🎉</span></h1>
-        </Header>
+      <Block textAlign="center" spacer={1}>
+        <Container text>
+          <SectionHeader as="h2">I'd love to hear from you</SectionHeader>
+          <SectionLead>Got a project to share? Feel free to get in touch.</SectionLead>
+          <Divider hidden />
+          <ButtonLink primary size="huge" circular>
+            <PaddedLink to="/contact">Message me</PaddedLink>
+          </ButtonLink>
+        </Container>
+      </Block>
 
-        {posts && (
-          <List>
-             {posts.map(({ node: post, index }) => (
-                <Card key={post.id}>
-                  <PostLink to={`/posts/${post.slug}/`}>
-                    <Img sizes={post.heroImage.sizes} backgroundColor={'#EEEEEE'} />
-                    <h3>{post.title}</h3>
-                  </PostLink>
-                </Card>
-             ))}
-          </List>
-        )}
-
-      </Wrapper>
-
-    </div>
-  )
-}
+    </Wrapper>
+  );
+};
 
 export const query = graphql`
   query indexQuery {
@@ -147,6 +152,6 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default Index
+export default Index;
